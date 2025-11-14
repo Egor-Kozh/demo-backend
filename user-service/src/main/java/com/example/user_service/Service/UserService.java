@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,7 +33,7 @@ public class UserService {
         return ResponseEntity.ok(users.stream().map(userDtoFactory::createUserDto).collect(Collectors.toList()));
     }
 
-    public ResponseEntity<UserDto> getUserById(Long userId){
+    public ResponseEntity<UserDto> getUserById(UUID userId){
         UserEntity user = userRepository.getUserById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 

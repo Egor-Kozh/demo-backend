@@ -11,5 +11,5 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
     @Query(value = "select * from users\n" +
             "where user_id = :userId;", nativeQuery = true)
-    Optional<UserEntity> getUserById(Long userId);
+    Optional<UserEntity> getUserById(UUID userId);
 }
