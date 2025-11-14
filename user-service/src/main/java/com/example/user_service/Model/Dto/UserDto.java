@@ -1,14 +1,18 @@
 package com.example.user_service.Model.Dto;
 
+import com.example.user_service.Model.Entity.Roles;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
+
+import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @Builder
 public class UserDto {
 
-    private Long userId;
+    private UUID userId;
 
     @NonNull
     private String firstName;
@@ -21,4 +25,10 @@ public class UserDto {
 
     @NonNull
     private String password;
+
+    @NonNull
+    private Roles role;
+
+    @NonNull
+    private LocalDate createdAt;
 }

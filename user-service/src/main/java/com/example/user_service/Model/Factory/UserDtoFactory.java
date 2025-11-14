@@ -14,6 +14,8 @@ public class UserDtoFactory {
                 .lastName(entity.getLastName())
                 .email(entity.getEmail())
                 .password(entity.getPassword())
+                .role(entity.getRole())
+                .createdAt(entity.getCreatedAt())
                 .build();
     }
 }

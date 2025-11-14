@@ -13,6 +13,8 @@ public class UserEntityFactory {
                 .lastName(userDto.getLastName())
                 .email(userDto.getEmail())
                 .password(userDto.getPassword())
+                .role(userDto.getRole())
+                .createdAt(userDto.getCreatedAt())
                 .build();
     }
 }
