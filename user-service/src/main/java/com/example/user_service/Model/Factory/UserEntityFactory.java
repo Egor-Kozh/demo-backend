@@ -17,7 +17,6 @@ public class UserEntityFactory {
                 .email(userDto.getEmail())
                 .password(userDto.getPassword())
                 .role(userDto.getRole() != null ? userDto.getRole() : Roles.USER)
-                .createdAt(userDto.getCreatedAt() != null ? userDto.getCreatedAt() : LocalDate.now())
                 .build();
     }
 }
