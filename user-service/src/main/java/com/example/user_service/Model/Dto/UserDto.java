@@ -26,9 +26,7 @@ public class UserDto {
     @NonNull
     private String password;
 
-    @NonNull
     private Roles role;
 
-    @NonNull
     private LocalDate createdAt;
 }

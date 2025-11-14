@@ -41,8 +41,7 @@ public class UserEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @Builder.Default
-    private Roles role = Roles.user;
+    private Roles role;
 
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;
