@@ -9,9 +9,9 @@ public class UserDtoFactory {
 
     public UserDto createUserDto (UserEntity entity){
         return UserDto.builder()
-                .userId(entity.getUser_id())
-                .firstName(entity.getFirst_name())
-                .lastName(entity.getLast_name())
+                .userId(entity.getUserId())
+                .firstName(entity.getFirstName())
+                .lastName(entity.getLastName())
                 .email(entity.getEmail())
                 .password(entity.getPassword())
                 .build();
