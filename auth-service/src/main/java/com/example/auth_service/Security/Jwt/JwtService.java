@@ -1,6 +1,8 @@
 package com.example.auth_service.Security.Jwt;
 
 import com.example.auth_service.Model.Dto.JwtAuthenticationDto;
+import com.example.auth_service.Model.Dto.UserDto;
+import com.example.auth_service.Model.Entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -26,16 +28,16 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
-    public JwtAuthenticationDto generateAuthToken(String email){
+    public JwtAuthenticationDto generateAuthToken(UserDto user){
         JwtAuthenticationDto jwtDto = new JwtAuthenticationDto();
-        jwtDto.setAccessToken(generateJwtToken(email));
-        jwtDto.setRefreshToken(generateRefreshToken(email));
+        jwtDto.setAccessToken(generateJwtToken(user));
+        jwtDto.setRefreshToken(generateRefreshToken(user));
         return jwtDto;
     }
 
-    public JwtAuthenticationDto refreshBaseToken(String email, String refreshToken){
+    public JwtAuthenticationDto refreshBaseToken(UserDto user, String refreshToken){
         JwtAuthenticationDto jwtDto = new JwtAuthenticationDto();
-        jwtDto.setAccessToken(generateJwtToken(email));
+        jwtDto.setAccessToken(generateJwtToken(user));
         jwtDto.setRefreshToken(refreshToken);
         return jwtDto;
     }
@@ -48,6 +50,16 @@ public class JwtService {
                 .getPayload();
 
         return claims.getSubject();
+    }
+
+    public String getRoleFromToken(String token){
+        Claims claims = Jwts.parser()
+                .verifyWith(getSingKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        return claims.get("role", String.class);
     }
 
     public Boolean validateJwtToken(String token){
@@ -73,19 +85,23 @@ public class JwtService {
         return false;
     }
 
-    public String generateJwtToken(String email){
-        Date date = Date.from(LocalDateTime.now().plusMinutes(1).atZone(ZoneId.systemDefault()).toInstant());
+    public String generateJwtToken(UserDto user){
+        Date date = Date.from(LocalDateTime.now().plusMinutes(5).atZone(ZoneId.systemDefault()).toInstant());
         return Jwts.builder()
-                .subject(email)
+                .subject(user.getEmail())
+                .claim("role", user.getRole().name())
+                .claim("userId", user.getUserId())
                 .expiration(date)
                 .signWith(getSingKey())
                 .compact();
     }
 
-    public String generateRefreshToken(String email){
+    public String generateRefreshToken(UserDto user){
         Date date = Date.from(LocalDateTime.now().plusDays(1).atZone(ZoneId.systemDefault()).toInstant());
         return Jwts.builder()
-                .subject(email)
+                .subject(user.getEmail())
+                .claim("role", user.getRole().name())
+                .claim("userId", user.getUserId())
                 .expiration(date)
                 .signWith(getSingKey())
                 .compact();

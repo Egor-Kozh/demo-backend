@@ -30,4 +30,15 @@ public class AuthController {
     public ResponseEntity<JwtAuthenticationDto> refreshToken(@RequestBody RefreshTokenDto refreshTokenDto) {
         return ResponseEntity.ok().body(authService.refreshToken(refreshTokenDto));
     }
+
+    @RequestMapping("/test/user")
+    public ResponseEntity<String> testRoleUser() {
+        return ResponseEntity.ok().body("Succes");
+    }
+
+    @RequestMapping("/test/admin")
+    public ResponseEntity<String> testRoleAdmin() {
+        return ResponseEntity.ok().body("Succes");
+    }
+
 }

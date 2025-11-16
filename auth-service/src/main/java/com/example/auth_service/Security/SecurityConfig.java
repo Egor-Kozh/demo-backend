@@ -1,5 +1,6 @@
 package com.example.auth_service.Security;
 
+import com.example.auth_service.Model.Entity.Roles;
 import com.example.auth_service.Security.Jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/user/registration", "/auth/**").permitAll()
+                                .requestMatchers("/test/user").hasAnyRole(Roles.ADMIN.name(), Roles.USER.name())
+                                .requestMatchers("/test/admin").hasRole(Roles.ADMIN.name())
                                 .requestMatchers("/**").authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(
                         SessionCreationPolicy.STATELESS
