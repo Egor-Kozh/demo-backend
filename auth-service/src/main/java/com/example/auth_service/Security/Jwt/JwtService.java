@@ -1,8 +1,7 @@
 package com.example.auth_service.Security.Jwt;
 
-import com.example.auth_service.Model.Dto.JwtAuthenticationDto;
+import com.example.auth_service.Security.Model.JwtAuthenticationDto;
 import com.example.auth_service.Model.Dto.UserDto;
-import com.example.auth_service.Model.Entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -52,16 +51,6 @@ public class JwtService {
         return claims.getSubject();
     }
 
-    public String getRoleFromToken(String token){
-        Claims claims = Jwts.parser()
-                .verifyWith(getSingKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
-
-        return claims.get("role", String.class);
-    }
-
     public Boolean validateJwtToken(String token){
         try{
             Jwts.parser()
@@ -71,6 +60,7 @@ public class JwtService {
                     .getPayload();
 
             return true;
+
         }catch (ExpiredJwtException expEx){
             LOGGER.error("Expired JwtException", expEx);
         }catch (UnsupportedJwtException expEx){
@@ -82,6 +72,7 @@ public class JwtService {
         }catch (Exception expEx){
             LOGGER.error("Invalid JwtException", expEx);
         }
+
         return false;
     }
 

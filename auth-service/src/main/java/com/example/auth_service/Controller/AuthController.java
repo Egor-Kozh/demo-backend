@@ -1,8 +1,8 @@
 package com.example.auth_service.Controller;
 
-import com.example.auth_service.Model.Dto.JwtAuthenticationDto;
-import com.example.auth_service.Model.Dto.RefreshTokenDto;
-import com.example.auth_service.Model.Dto.UserCredentialsDto;
+import com.example.auth_service.Security.Model.JwtAuthenticationDto;
+import com.example.auth_service.Security.Model.RefreshTokenDto;
+import com.example.auth_service.Security.Model.UserCredentialsDto;
 import com.example.auth_service.Model.Dto.UserDto;
 import com.example.auth_service.Service.AuthService;
 import lombok.RequiredArgsConstructor;

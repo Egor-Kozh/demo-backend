@@ -1,4 +1,4 @@
-package com.example.auth_service.Model.Dto;
+package com.example.auth_service.Security.Model;
 
 import lombok.Data;
 
