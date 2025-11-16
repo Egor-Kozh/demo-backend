@@ -29,7 +29,7 @@ public class AuthService {
     private final JwtService jwtService;
 
 
-    public ResponseEntity<String> createUser(UserDto newUser){
+    public ResponseEntity<String> createUser(UserDto newUser) {
 
         UserEntity createdUser = userEntityFactory.createUserEntity(newUser);
 
@@ -39,13 +39,13 @@ public class AuthService {
     }
 
 
-    public JwtAuthenticationDto singIn(UserCredentialsDto userCredentialsDto){
+    public JwtAuthenticationDto singIn(UserCredentialsDto userCredentialsDto) {
 
         UserEntity user = userRepository.findUserByEmail(userCredentialsDto.getEmail());
 
         UserDto userDto = userDtoFactory.createUserDto(user);
 
-        if(passwordEncoder.matches(userCredentialsDto.getPassword(), user.getPassword())){
+        if (passwordEncoder.matches(userCredentialsDto.getPassword(), user.getPassword())) {
             return jwtService.generateAuthToken(userDto);
         }
 
@@ -53,15 +53,16 @@ public class AuthService {
     }
 
 
-    public JwtAuthenticationDto refreshToken(RefreshTokenDto refreshTokenDto){
+    public JwtAuthenticationDto refreshToken(RefreshTokenDto refreshTokenDto) {
+
         String refreshToken = refreshTokenDto.getRefreshToken();
 
-        if(refreshToken != null && jwtService.validateJwtToken(refreshToken)){
+        if (refreshToken != null && jwtService.validateJwtToken(refreshToken)) {
             UserEntity user = userRepository.findUserByEmail(jwtService.getEmailFromToken(refreshToken));
 
             UserDto userDto = userDtoFactory.createUserDto(user);
 
-            return  jwtService.refreshBaseToken(userDto, refreshToken);
+            return jwtService.refreshBaseToken(userDto, refreshToken);
         }
 
         return null;

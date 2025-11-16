@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserDtoFactory {
 
-    public UserDto createUserDto (UserEntity entity){
+    public UserDto createUserDto(UserEntity entity) {
         return UserDto.builder()
                 .userId(entity.getUserId())
                 .firstName(entity.getFirstName())

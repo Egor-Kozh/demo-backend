@@ -30,7 +30,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String token = getTokenFromRequest(request);
 
-        if(token != null && jwtService.validateJwtToken(token)){
+        if (token != null && jwtService.validateJwtToken(token)) {
             setCustomUserDetailsToSecurityContextHolder(token);
         }
 
@@ -49,10 +49,10 @@ public class JwtFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
-    private String getTokenFromRequest(HttpServletRequest request){
+    private String getTokenFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if(bearerToken != null && bearerToken.startsWith("Bearer ")){
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
 
