@@ -28,9 +28,4 @@ public class UserController {
     public ResponseEntity<UserDto> getUserById(@PathVariable UUID userId) {
         return userService.getUserById(userId);
     }
-
-    @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody UserDto newUser) {
-        return userService.createUser(newUser);
-    }
 }

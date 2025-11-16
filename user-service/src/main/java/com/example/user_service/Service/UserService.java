@@ -19,12 +19,9 @@ public class UserService {
 
     private final UserDtoFactory userDtoFactory;
 
-    private final UserEntityFactory userEntityFactory;
-
     public UserService(UserRepository userRepository, UserDtoFactory userDtoFactory, UserEntityFactory userEntityFactory) {
         this.userRepository = userRepository;
         this.userDtoFactory = userDtoFactory;
-        this.userEntityFactory = userEntityFactory;
     }
 
     public ResponseEntity<List<UserDto>> getAllUsers() {
@@ -33,21 +30,11 @@ public class UserService {
         return ResponseEntity.ok(users.stream().map(userDtoFactory::createUserDto).collect(Collectors.toList()));
     }
 
-    public ResponseEntity<UserDto> getUserById(UUID userId){
+    public ResponseEntity<UserDto> getUserById(UUID userId) {
         UserEntity user = userRepository.getUserById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
         return ResponseEntity.ok(userDtoFactory.createUserDto(user));
     }
 
-    public ResponseEntity<String> createUser(UserDto newUser){
-        UserEntity createdUser = userEntityFactory.createUserEntity(newUser);
-
-        userRepository.saveAndFlush(createdUser);
-
-        System.out.println(newUser);
-
-        return ResponseEntity.ok().body("User was created");
-    }
 }
-
