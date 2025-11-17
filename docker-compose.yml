@@ -1,0 +1,23 @@
+services:
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - backend-network
+  
+  users-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    external: true
+    driver: bridge
