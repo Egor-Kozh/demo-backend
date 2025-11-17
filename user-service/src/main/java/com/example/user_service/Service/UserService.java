@@ -29,18 +29,33 @@ public class UserService {
         return ResponseEntity.ok(users.stream().map(userDtoFactory::createUserDto).collect(Collectors.toList()));
     }
 
-    public ResponseEntity<UserDto> getUserById(UUID userId) {
-        UserEntity user = userRepository.getUserById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+    public ResponseEntity<?> getUserById(UUID userId) {
+        try {
+            UserEntity user = userRepository.getUserById(userId);
 
-        return ResponseEntity.ok(userDtoFactory.createUserDto(user));
+            if (user == null) {
+                throw new RuntimeException("There is no user with this id!");
+            }
+
+            return ResponseEntity.ok(userDtoFactory.createUserDto(user));
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    public ResponseEntity<UserDto> getUserByEmail(String email) {
-        UserEntity user = userRepository.getUserByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+    public ResponseEntity<?> getUserByEmail(String email) {
+        try {
+            UserEntity user = userRepository.getUserByEmail(email);
 
-        return ResponseEntity.ok(userDtoFactory.createUserDto(user));
+            if (user == null) {
+                throw new RuntimeException("There is no user with this email!");
+            }
+
+            return ResponseEntity.ok(userDtoFactory.createUserDto(user));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }

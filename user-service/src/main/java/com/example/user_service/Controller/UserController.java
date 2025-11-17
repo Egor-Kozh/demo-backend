@@ -14,7 +14,6 @@ public class UserController {
 
     private final UserService userService;
 
-
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -25,12 +24,12 @@ public class UserController {
     }
 
     @GetMapping(path = "/id/{userId}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable UUID userId) {
+    public ResponseEntity<?> getUserById(@PathVariable UUID userId) {
         return userService.getUserById(userId);
     }
 
     @GetMapping(path = "/email/{email}")
-    public ResponseEntity<UserDto> getUserByEmail(@PathVariable String email) {
+    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
         return userService.getUserByEmail(email);
     }
 }
