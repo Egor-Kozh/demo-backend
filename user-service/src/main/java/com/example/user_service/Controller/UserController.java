@@ -24,8 +24,13 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping(path = "{userId}")
+    @GetMapping(path = "/id/{userId}")
     public ResponseEntity<UserDto> getUserById(@PathVariable UUID userId) {
         return userService.getUserById(userId);
+    }
+
+    @GetMapping(path = "/email/{email}")
+    public ResponseEntity<UserDto> getUserByEmail(@PathVariable String email) {
+        return userService.getUserByEmail(email);
     }
 }

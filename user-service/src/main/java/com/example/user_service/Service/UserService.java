@@ -3,7 +3,6 @@ package com.example.user_service.Service;
 import com.example.user_service.Model.Dto.UserDto;
 import com.example.user_service.Model.Entity.UserEntity;
 import com.example.user_service.Model.Factory.UserDtoFactory;
-import com.example.user_service.Model.Factory.UserEntityFactory;
 import com.example.user_service.Repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ public class UserService {
 
     private final UserDtoFactory userDtoFactory;
 
-    public UserService(UserRepository userRepository, UserDtoFactory userDtoFactory, UserEntityFactory userEntityFactory) {
+    public UserService(UserRepository userRepository, UserDtoFactory userDtoFactory) {
         this.userRepository = userRepository;
         this.userDtoFactory = userDtoFactory;
     }
@@ -33,6 +32,13 @@ public class UserService {
     public ResponseEntity<UserDto> getUserById(UUID userId) {
         UserEntity user = userRepository.getUserById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+
+        return ResponseEntity.ok(userDtoFactory.createUserDto(user));
+    }
+
+    public ResponseEntity<UserDto> getUserByEmail(String email) {
+        UserEntity user = userRepository.getUserByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
 
         return ResponseEntity.ok(userDtoFactory.createUserDto(user));
     }
