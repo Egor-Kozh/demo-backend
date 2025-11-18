@@ -32,4 +32,14 @@ public class UserController {
     public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
         return userService.getUserByEmail(email);
     }
+
+    @GetMapping(path = "/me")
+    public ResponseEntity<?> getUserMe() {
+        return userService.getUserMe();
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<?> deleteUser() {
+        return userService.deleteUser();
+    }
 }
