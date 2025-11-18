@@ -1,7 +1,7 @@
-package com.example.auth_service.Security;
+package com.example.user_service.Security;
 
-import com.example.auth_service.Model.Entity.Roles;
-import com.example.auth_service.Security.Jwt.JwtFilter;
+import com.example.user_service.Model.Entity.Roles;
+import com.example.user_service.Security.Jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    
+
     private final JwtFilter jwtFilter;
 
     @Bean
@@ -29,9 +29,7 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/user/registration", "/auth/**").permitAll()
-                                .requestMatchers("/test/user").hasAnyRole(Roles.ADMIN.name(), Roles.USER.name())
-                                .requestMatchers("/test/admin").hasRole(Roles.ADMIN.name())
+                        auth.requestMatchers("/user/**").hasAnyRole(Roles.USER.name(), Roles.ADMIN.name())
                                 .requestMatchers("/**").authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(
                         SessionCreationPolicy.STATELESS
@@ -45,4 +43,5 @@ public class SecurityConfig {
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder(4);
     }
+
 }
