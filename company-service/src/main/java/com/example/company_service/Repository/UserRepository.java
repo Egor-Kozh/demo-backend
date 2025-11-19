@@ -1,0 +1,14 @@
+package com.example.company_service.Repository;
+
+import com.example.company_service.Model.Entity.UserEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.UUID;
+
+public interface UserRepository extends JpaRepository<UserEntity, UUID> {
+
+    @Query(value = "select * from users\n" +
+            "where email = :email", nativeQuery = true)
+    UserEntity getUserByEmail(String email);
+}
