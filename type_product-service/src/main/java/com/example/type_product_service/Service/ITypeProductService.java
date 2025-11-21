@@ -3,15 +3,16 @@ package com.example.type_product_service.Service;
 import com.example.type_product_service.Model.Dto.TypeProductDto;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ITypeProductService {
 
-    ResponseEntity<?> getAllTypeProduct();
+    ResponseEntity<List<TypeProductDto>> getAllTypeProduct();
 
-    ResponseEntity<?> getTypeProductById(UUID typeProductId);
+    ResponseEntity<TypeProductDto> getTypeProductById(UUID typeProductId);
 
-    ResponseEntity<?> getTypeProductByName(String typeProductName);
+    ResponseEntity<TypeProductDto> getTypeProductByName(String typeProductName);
 
-    ResponseEntity<?> createTypeProduct(TypeProductDto typeProductDto);
+    ResponseEntity<String> createTypeProduct(TypeProductDto typeProductDto);
 }

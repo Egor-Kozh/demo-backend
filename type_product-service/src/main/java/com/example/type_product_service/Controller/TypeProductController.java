@@ -22,16 +22,28 @@ public class TypeProductController {
 
     @GetMapping(path = "/id/{typeProductId}")
     public ResponseEntity<?> getTypeProductById(@PathVariable UUID typeProductId) {
-        return typeProductService.getTypeProductById(typeProductId);
+        try {
+            return typeProductService.getTypeProductById(typeProductId);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping(path = "/name/{typeProductName}")
     public ResponseEntity<?> getTypeProductByName(@PathVariable String typeProductName) {
-        return typeProductService.getTypeProductByName(typeProductName);
+        try {
+            return typeProductService.getTypeProductByName(typeProductName);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PostMapping
     public ResponseEntity<?> createTypeProduct(@RequestBody TypeProductDto typeProductDto) {
-        return typeProductService.createTypeProduct(typeProductDto);
+        try {
+            return typeProductService.createTypeProduct(typeProductDto);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

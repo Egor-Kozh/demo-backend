@@ -24,7 +24,7 @@ public class TypeProductService implements ITypeProductService {
     private final TypeProductEntityFactory typeProductEntityFactory;
 
     @Override
-    public ResponseEntity<?> getAllTypeProduct() {
+    public ResponseEntity<List<TypeProductDto>> getAllTypeProduct() {
         List<TypeProductEntity> typeProducts = typeProductRepository.findAll();
 
         return ResponseEntity.ok(typeProducts.stream().map(typeProductDtoFactory::createTypeProductDto)
@@ -32,22 +32,36 @@ public class TypeProductService implements ITypeProductService {
     }
 
     @Override
-    public ResponseEntity<?> getTypeProductById(UUID typeProductId) {
+    public ResponseEntity<TypeProductDto> getTypeProductById(UUID typeProductId) throws RuntimeException {
         TypeProductEntity typeProduct = typeProductRepository.findTypeProductById(typeProductId);
 
+        if (typeProduct == null) {
+            throw new RuntimeException("Тип товара с таким id не существует!");
+        }
+
         return ResponseEntity.ok(typeProductDtoFactory.createTypeProductDto(typeProduct));
     }
 
     @Override
-    public ResponseEntity<?> getTypeProductByName(String typeProductName) {
+    public ResponseEntity<TypeProductDto> getTypeProductByName(String typeProductName) throws RuntimeException {
         TypeProductEntity typeProduct = typeProductRepository.findTypeProductByName(typeProductName);
 
+        if (typeProduct == null) {
+            throw new RuntimeException("Тип товара с таким name не существует!");
+        }
+
         return ResponseEntity.ok(typeProductDtoFactory.createTypeProductDto(typeProduct));
     }
 
     @Override
-    public ResponseEntity<?> createTypeProduct(TypeProductDto typeProductDto) {
+    public ResponseEntity<String> createTypeProduct(TypeProductDto typeProductDto) throws RuntimeException {
         TypeProductEntity typeProduct = typeProductEntityFactory.createTypeProductEntity(typeProductDto);
+
+        TypeProductEntity typeProductByName = typeProductRepository.findTypeProductByName(typeProduct.getTypeProductName());
+
+        if (typeProductByName != null) {
+            throw new RuntimeException("Тип товара с таким name уже существует!");
+        }
 
         typeProductRepository.saveAndFlush(typeProduct);
 
