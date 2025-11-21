@@ -22,17 +22,29 @@ public class CompanyController {
 
     @GetMapping(path = "/id/{companyId}")
     public ResponseEntity<?> getCompanyById(@PathVariable UUID companyId) {
-        return companyService.getCompanyById(companyId);
+        try {
+            return companyService.getCompanyById(companyId);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping(path = "/name/{companyName}")
     public ResponseEntity<?> getCompanyByName(@PathVariable String companyName) {
-        return companyService.getCompanyByName(companyName);
+        try {
+            return companyService.getCompanyByName(companyName);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PostMapping
     public ResponseEntity<?> addCompany(@RequestBody CompanyDto companyDto) {
-        return companyService.createCompany(companyDto);
+        try {
+            return companyService.createCompany(companyDto);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }

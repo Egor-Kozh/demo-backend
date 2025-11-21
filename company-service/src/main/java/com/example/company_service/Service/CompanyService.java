@@ -24,32 +24,43 @@ public class CompanyService implements ICompanyService {
     private final CompanyEntityFactory companyEntityFactory;
 
     @Override
-    public ResponseEntity<?> getAllCompany() {
+    public ResponseEntity<List<CompanyDto>> getAllCompany() {
         List<CompanyEntity> companies = companyRepository.findAll();
 
         return ResponseEntity.ok(companies.stream().map(companyDtoFactory::createCompanyDto).collect(Collectors.toList()));
     }
 
     @Override
-    public ResponseEntity<?> getCompanyById(UUID companyId) {
+    public ResponseEntity<CompanyDto> getCompanyById(UUID companyId) throws RuntimeException {
         CompanyEntity company = companyRepository.findCompanyById(companyId);
 
+        if (company == null) {
+            throw new RuntimeException("Компании с таким id не существует!");
+        }
+
         return ResponseEntity.ok(companyDtoFactory.createCompanyDto(company));
     }
 
     @Override
-    public ResponseEntity<?> getCompanyByName(String companyName) {
+    public ResponseEntity<CompanyDto> getCompanyByName(String companyName) throws RuntimeException {
         CompanyEntity company = companyRepository.findCompanyByName(companyName);
 
+        if (company == null) {
+            throw new RuntimeException("Компании с таким name не существует!");
+        }
+
         return ResponseEntity.ok(companyDtoFactory.createCompanyDto(company));
     }
 
     @Override
-    public ResponseEntity<?> createCompany(CompanyDto company) {
-        System.out.println(company);
+    public ResponseEntity<String> createCompany(CompanyDto company) throws RuntimeException {
         CompanyEntity newCompany = companyEntityFactory.createCompanyEntity(company);
 
-        System.out.println(newCompany);
+        CompanyEntity companyByName = companyRepository.findCompanyByName(newCompany.getCompanyName());
+
+        if (companyByName != null) {
+            throw new RuntimeException("Компания с таким name уже существует!");
+        }
 
         companyRepository.saveAndFlush(newCompany);
 

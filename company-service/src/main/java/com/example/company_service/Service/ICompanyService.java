@@ -3,15 +3,16 @@ package com.example.company_service.Service;
 import com.example.company_service.Model.Dto.CompanyDto;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ICompanyService {
 
-    ResponseEntity<?> getAllCompany();
+    ResponseEntity<List<CompanyDto>> getAllCompany();
 
-    ResponseEntity<?> getCompanyById(UUID companyId);
+    ResponseEntity<CompanyDto> getCompanyById(UUID companyId);
 
-    ResponseEntity<?> getCompanyByName(String companyName);
+    ResponseEntity<CompanyDto> getCompanyByName(String companyName);
 
-    ResponseEntity<?> createCompany(CompanyDto company);
+    ResponseEntity<String> createCompany(CompanyDto company);
 }
