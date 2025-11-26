@@ -5,7 +5,10 @@ import com.example.product_service.Model.Entity.ProductEntity;
 import com.example.product_service.Model.Factory.ProductDtoFactory;
 import com.example.product_service.Model.Factory.ProductEntityFactory;
 import com.example.product_service.Repository.ProductRepository;
+import com.example.product_service.Service.Client.CompanyServiceClient;
+import com.example.product_service.Service.Client.TypeProductServiceClient;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,10 @@ public class ProductService implements IProductService {
     private final ProductDtoFactory productDtoFactory;
 
     private final ProductEntityFactory productEntityFactory;
+
+    private final CompanyServiceClient companyServiceClient;
+
+    private final TypeProductServiceClient typeProductServiceClient;
 
     @Override
     public ResponseEntity<List<ProductDto>> getAllProducts() throws RuntimeException {
@@ -57,9 +64,18 @@ public class ProductService implements IProductService {
         ProductEntity entity = productEntityFactory.createProductEntity(product);
 
         ProductEntity entityName = productRepository.getProductByName(entity.getProductName());
-
         if (entityName != null) {
             throw new RuntimeException("Продукт с таким name уже существует!");
+        }
+
+        ResponseEntity companyResponse = companyServiceClient.validateCompany(entity.getCompanyId());
+        if (companyResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
+            throw new RuntimeException("Компания не найдена!");
+        }
+
+        ResponseEntity typeProductResponse = typeProductServiceClient.validateTypeProduct(entity.getTypeProductId());
+        if (typeProductResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
+            throw new RuntimeException("Тип продукта не найден!");
         }
 
         productRepository.saveAndFlush(entity);
