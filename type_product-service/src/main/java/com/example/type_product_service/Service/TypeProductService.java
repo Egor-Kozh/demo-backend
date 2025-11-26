@@ -69,7 +69,7 @@ public class TypeProductService implements ITypeProductService {
     }
 
     @Override
-    public ResponseEntity<Boolean> checkTypeProduct(UUID typeProductId) throws RuntimeException {
+    public ResponseEntity<Boolean> validateTypeProduct(UUID typeProductId) throws RuntimeException {
         TypeProductEntity typeProduct = typeProductRepository.findTypeProductById(typeProductId);
 
         if (typeProduct == null) {

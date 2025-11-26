@@ -16,5 +16,5 @@ public interface ITypeProductService {
 
     ResponseEntity<String> createTypeProduct(TypeProductDto typeProductDto);
 
-    ResponseEntity<Boolean> checkTypeProduct(UUID typeProductId);
+    ResponseEntity<Boolean> validateTypeProduct(UUID typeProductId);
 }
