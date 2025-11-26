@@ -48,11 +48,7 @@ public class TypeProductController {
     }
 
     @GetMapping(path = "/check/{typeProductId}")
-    public ResponseEntity<?> checkTypeProduct(@PathVariable UUID typeProductId) {
-        try {
-            return typeProductService.validateTypeProduct(typeProductId);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<Boolean> checkTypeProduct(@PathVariable UUID typeProductId) {
+        return typeProductService.validateTypeProduct(typeProductId);
     }
 }
