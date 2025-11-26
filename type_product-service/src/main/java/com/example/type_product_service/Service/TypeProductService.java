@@ -67,4 +67,15 @@ public class TypeProductService implements ITypeProductService {
 
         return ResponseEntity.ok("Type product created!");
     }
+
+    @Override
+    public ResponseEntity<Boolean> checkTypeProduct(UUID typeProductId) throws RuntimeException {
+        TypeProductEntity typeProduct = typeProductRepository.findTypeProductById(typeProductId);
+
+        if (typeProduct == null) {
+            throw new RuntimeException("Тип товара с таким id не существует!");
+        }
+
+        return ResponseEntity.ok(true);
+    }
 }

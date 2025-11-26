@@ -15,4 +15,6 @@ public interface ITypeProductService {
     ResponseEntity<TypeProductDto> getTypeProductByName(String typeProductName);
 
     ResponseEntity<String> createTypeProduct(TypeProductDto typeProductDto);
+
+    ResponseEntity<Boolean> checkTypeProduct(UUID typeProductId);
 }
