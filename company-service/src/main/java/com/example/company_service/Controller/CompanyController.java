@@ -47,4 +47,12 @@ public class CompanyController {
         }
     }
 
+    @GetMapping(path = "/check/{companyId}")
+    public ResponseEntity<?> checkCompany(@PathVariable UUID companyId) {
+        try {
+            return companyService.validateCompany(companyId);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

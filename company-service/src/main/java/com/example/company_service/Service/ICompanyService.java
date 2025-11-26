@@ -15,4 +15,6 @@ public interface ICompanyService {
     ResponseEntity<CompanyDto> getCompanyByName(String companyName);
 
     ResponseEntity<String> createCompany(CompanyDto company);
+
+    ResponseEntity<Boolean> validateCompany(UUID companyId);
 }
