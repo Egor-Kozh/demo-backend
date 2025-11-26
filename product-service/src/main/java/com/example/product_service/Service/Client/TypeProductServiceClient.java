@@ -11,5 +11,5 @@ import java.util.UUID;
 public interface TypeProductServiceClient {
 
     @GetMapping("/typeProduct/id/{typeProductId}")
-    ResponseEntity validateTypeProduct(@PathVariable UUID typeProductId);
+    ResponseEntity<Boolean> validateTypeProduct(@PathVariable UUID typeProductId);
 }

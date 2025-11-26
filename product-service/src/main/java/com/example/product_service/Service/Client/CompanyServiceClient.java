@@ -11,5 +11,5 @@ import java.util.UUID;
 public interface CompanyServiceClient {
 
     @GetMapping("/company/id/{companyId}")
-    ResponseEntity validateCompany(@PathVariable UUID companyId);
+    ResponseEntity<Boolean> validateCompany(@PathVariable UUID companyId);
 }

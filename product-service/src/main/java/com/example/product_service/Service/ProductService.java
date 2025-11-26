@@ -68,13 +68,14 @@ public class ProductService implements IProductService {
             throw new RuntimeException("Продукт с таким name уже существует!");
         }
 
-        ResponseEntity companyResponse = companyServiceClient.validateCompany(entity.getCompanyId());
-        if (companyResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
+        ResponseEntity<Boolean> companyResponse = companyServiceClient.validateCompany(entity.getCompanyId());
+
+        if (!Boolean.TRUE.equals(companyResponse.getBody())) {
             throw new RuntimeException("Компания не найдена!");
         }
 
-        ResponseEntity typeProductResponse = typeProductServiceClient.validateTypeProduct(entity.getTypeProductId());
-        if (typeProductResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
+        ResponseEntity<Boolean> typeProductResponse = typeProductServiceClient.validateTypeProduct(entity.getTypeProductId());
+        if (!Boolean.TRUE.equals(typeProductResponse.getBody())) {
             throw new RuntimeException("Тип продукта не найден!");
         }
 
