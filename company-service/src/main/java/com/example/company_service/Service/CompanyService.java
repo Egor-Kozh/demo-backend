@@ -68,11 +68,11 @@ public class CompanyService implements ICompanyService {
     }
 
     @Override
-    public ResponseEntity<Boolean> validateCompany(UUID companyId) throws RuntimeException {
+    public ResponseEntity<Boolean> validateCompany(UUID companyId) {
         CompanyEntity company = companyRepository.findCompanyById(companyId);
 
         if (company == null) {
-            throw new RuntimeException("Компании с таким id не существует!");
+            return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok(true);
