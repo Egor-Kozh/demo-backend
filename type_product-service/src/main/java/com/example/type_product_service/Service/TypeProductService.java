@@ -73,7 +73,7 @@ public class TypeProductService implements ITypeProductService {
         TypeProductEntity typeProduct = typeProductRepository.findTypeProductById(typeProductId);
 
         if (typeProduct == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(false);
         }
 
         return ResponseEntity.ok(true);

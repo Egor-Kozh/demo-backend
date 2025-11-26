@@ -1,15 +1,25 @@
 package com.example.product_service.Service.Client;
 
-import org.springframework.cloud.openfeign.FeignClient;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.UUID;
 
-@FeignClient(name = "type_product-service", url = "http://nginx-server:8080")
-public interface TypeProductServiceClient {
+@Service
+@AllArgsConstructor
+public class TypeProductServiceClient {
 
-    @GetMapping("/typeProduct/id/{typeProductId}")
-    ResponseEntity<Boolean> validateTypeProduct(@PathVariable UUID typeProductId);
+    private final WebClient webClient;
+
+    public ResponseEntity<Boolean> validateTypeProduct(UUID typeProductId) {
+        return ResponseEntity.ok(webClient
+                .get()
+                .uri("type_product/check/{typeProductId}", typeProductId)
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .blockOptional()
+                .orElse(false));
+    }
 }

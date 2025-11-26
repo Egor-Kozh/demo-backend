@@ -72,7 +72,7 @@ public class CompanyService implements ICompanyService {
         CompanyEntity company = companyRepository.findCompanyById(companyId);
 
         if (company == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(false);
         }
 
         return ResponseEntity.ok(true);

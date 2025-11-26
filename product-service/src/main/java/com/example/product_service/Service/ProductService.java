@@ -8,7 +8,6 @@ import com.example.product_service.Repository.ProductRepository;
 import com.example.product_service.Service.Client.CompanyServiceClient;
 import com.example.product_service.Service.Client.TypeProductServiceClient;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

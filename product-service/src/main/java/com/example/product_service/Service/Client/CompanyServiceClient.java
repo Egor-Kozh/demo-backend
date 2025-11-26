@@ -1,15 +1,25 @@
 package com.example.product_service.Service.Client;
 
-import org.springframework.cloud.openfeign.FeignClient;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.UUID;
 
-@FeignClient(name = "company-service", url = "http://nginx-server:8080")
-public interface CompanyServiceClient {
+@Service
+@AllArgsConstructor
+public class CompanyServiceClient {
 
-    @GetMapping("/company/id/{companyId}")
-    ResponseEntity<Boolean> validateCompany(@PathVariable UUID companyId);
+    private final WebClient webClient;
+
+    public ResponseEntity<Boolean> validateCompany(UUID companyId) {
+        return ResponseEntity.ok(webClient
+                .get()
+                .uri("company/check/{companyId}", companyId)
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .blockOptional()
+                .orElse(false));
+    }
 }
