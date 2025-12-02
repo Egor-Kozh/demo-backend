@@ -82,4 +82,15 @@ public class ProductService implements IProductService {
 
         return ResponseEntity.ok().body("Продукт успешно создан!");
     }
+
+    @Override
+    public ResponseEntity<Boolean> validateProduct(UUID productId) {
+        ProductEntity product = productRepository.getProductById(productId);
+
+        if (product == null) {
+            return ResponseEntity.ok().body(false);
+        }
+
+        return ResponseEntity.ok().body(true);
+    }
 }

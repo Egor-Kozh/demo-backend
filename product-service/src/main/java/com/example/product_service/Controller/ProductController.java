@@ -42,6 +42,11 @@ public class ProductController {
         }
     }
 
+    @GetMapping(path = "/check/{productId}")
+    public ResponseEntity<?> validateProduct(@PathVariable UUID productId) {
+        return productService.validateProduct(productId);
+    }
+
     @PostMapping
     public ResponseEntity<?> createProduct(@RequestBody ProductDto productDto) {
         try {

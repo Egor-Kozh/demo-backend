@@ -15,4 +15,6 @@ public interface IProductService {
     ResponseEntity<ProductDto> getProductsByName(String productName) throws RuntimeException;
 
     ResponseEntity<String> createProduct(ProductDto product) throws RuntimeException;
+
+    ResponseEntity<Boolean> validateProduct(UUID productId);
 }
